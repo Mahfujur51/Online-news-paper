@@ -1,4 +1,4 @@
 
-                <footer class="footer text-right">
-                   2018 © Developed by PHPGurukul.
-                </footer>
+<footer class="footer text-right">
+	&copy;2019-<?php echo Date("Y"); ?> || Mahfujur Rahman
+</footer>
