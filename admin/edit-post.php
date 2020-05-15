@@ -139,8 +139,9 @@ function getSubCat(val) {
 </div>
 
 <?php
-$postid=intval($_GET['pid']);
-$query=mysqli_query($con,"select tblposts.id as postid,tblposts.PostImage,tblposts.PostTitle as title,tblposts.PostDetails,tblcategory.CategoryName as category,tblcategory.id as catid,tblsubcategory.SubCategoryId as subcatid,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$postid' and tblposts.Is_Active=1 ");
+$id=intval($_GET['pid']);
+ $sql="SELECT tbl_post.id as pid,tbl_post.postimage as pimage,tbl_post.postdatils as pdetails,tbl_post.posttitle as ptitle,tbl_catagory.catname as cname,tbl_catagory.id as cid,tbl_subcategory.id as sid,tbl_subcategory.subcatname as sname FROM tbl_post JOIN tbl_catagory on tbl_post.catid=tbl_catagory.id JOIN tbl_subcategory on tbl_subcategory.id=tbl_post.subcatid WHERE tbl_post.active='1' AND tbl_post.id='$id'";
+$query=mysqli_query($con,$sql);
 while($row=mysqli_fetch_array($query))
 {
 ?>
@@ -151,7 +152,7 @@ while($row=mysqli_fetch_array($query))
                                         <form name="addpost" method="post">
  <div class="form-group m-b-20">
 <label for="exampleInputEmail1">Post Title</label>
-<input type="text" class="form-control" id="posttitle" value="<?php echo htmlentities($row['title']);?>" name="posttitle" placeholder="Enter title" required>
+<input type="text" class="form-control" id="posttitle" value="<?php echo htmlentities($row['ptitle']);?>" name="posttitle" placeholder="Enter title" required>
 </div>
 
 
@@ -159,14 +160,15 @@ while($row=mysqli_fetch_array($query))
 <div class="form-group m-b-20">
 <label for="exampleInputEmail1">Category</label>
 <select class="form-control" name="category" id="category" onChange="getSubCat(this.value);" required>
-<option value="<?php echo htmlentities($row['catid']);?>"><?php echo htmlentities($row['category']);?></option>
+<option value="<?php echo htmlentities($row['cid']);?>"><?php echo htmlentities($row['cname']);?></option>
 <?php
 // Feching active categories
-$ret=mysqli_query($con,"select id,CategoryName from  tblcategory where Is_Active=1");
-while($result=mysqli_fetch_array($ret))
+$csql="SELECT * FROM tbl_catagory WHERE active='1'";
+$cquery=mysqli_query($con,$csql);
+while($result=mysqli_fetch_array($cquery))
 {    
 ?>
-<option value="<?php echo htmlentities($result['id']);?>"><?php echo htmlentities($result['CategoryName']);?></option>
+<option value="<?php echo htmlentities($result['id']);?>"><?php echo htmlentities($result['catname']);?></option>
 <?php } ?>
 
 </select> 
@@ -175,7 +177,7 @@ while($result=mysqli_fetch_array($ret))
 <div class="form-group m-b-20">
 <label for="exampleInputEmail1">Sub Category</label>
 <select class="form-control" name="subcategory" id="subcategory" required>
-<option value="<?php echo htmlentities($row['subcatid']);?>"><?php echo htmlentities($row['subcategory']);?></option>
+<option value="<?php echo htmlentities($row['sid']);?>"><?php echo htmlentities($row['sname']);?></option>
 </select> 
 </div>
          
@@ -184,7 +186,7 @@ while($result=mysqli_fetch_array($ret))
 <div class="col-sm-12">
  <div class="card-box">
 <h4 class="m-b-30 m-t-0 header-title"><b>Post Details</b></h4>
-<textarea class="summernote" name="postdescription" required><?php echo htmlentities($row['PostDetails']);?></textarea>
+<textarea class="summernote" name="postdescription" required><?php echo htmlentities($row['pdetails']);?></textarea>
 </div>
 </div>
 </div>
@@ -193,9 +195,9 @@ while($result=mysqli_fetch_array($ret))
 <div class="col-sm-12">
  <div class="card-box">
 <h4 class="m-b-30 m-t-0 header-title"><b>Post Image</b></h4>
-<img src="postimages/<?php echo htmlentities($row['PostImage']);?>" width="300"/>
+<img src="postimages/<?php echo htmlentities($row['pimage']);?>" width="300"/>
 <br />
-<a href="change-image.php?pid=<?php echo htmlentities($row['postid']);?>">Update Image</a>
+<a href="change-image.php?pid=<?php echo htmlentities($row['pid']);?>" class="btn btn-success">Update Image</a>
 </div>
 </div>
 </div>
