@@ -9,6 +9,7 @@ if(strlen($_SESSION['login'])==0)
 else{
     if(isset($_POST['update']))
     {
+        $id=intval($_GET['pid']);
 
        //picture coding
         $picture_name=$_FILES['postimage']['name'];
@@ -20,22 +21,22 @@ else{
           if($picture_size<=50000000)
 
             $pic_name=time()."_".$picture_name;
-        move_uploaded_file($picture_tmp_name,"postimages/".$pic_name);
+           move_uploaded_file($picture_tmp_name,"postimages/".$pic_name);
 
-        $sql="INSERT INTO tbl_post(postimage)VALUES('$pic_name')";
+        $sql="UPDATE tbl_post SET postimage='$pic_name' WHERE id='$id'";
         $query=mysqli_query($con,$sql);
         if ($query) {
-         $msg="Image successfully added ";
+           $msg="Image successfully added ";
 
-     }else{
-      $error="Something went wrong . Please try again.";
-  }
-}
+       }else{
+          $error="Something went wrong . Please try again.";
+      }
+  } }
 
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
+  ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">

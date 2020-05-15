@@ -8,9 +8,10 @@ if(strlen($_SESSION['login'])==0)
 }
 else{
 
-    if($_GET['action']='restore')
+    if($_GET['action']='restore' && $_GET['rid'])
     {
-        $postid=intval($_GET['pid']);
+        $postid=intval($_GET['rid']);
+        $sql=""
         $query=mysqli_query($con,"update tblposts set Is_Active=1 where id='$postid'");
         if($query)
         {
@@ -162,7 +163,7 @@ else{
                                                     <td><b><?php echo htmlentities($row['ptitle']);?></b></td>
                                                     <td><?php echo htmlentities($row['cname'])?></td>
                                                     <td><?php echo htmlentities($row['sname'])?></td>
-                                                    <td><a href="edit-post.php?pid=<?php echo htmlentities($row['pid']);?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
+                                                    <td><a href="?rid=<?php echo htmlentities($row['pid']);?>&&action=restore"><i class="ion-arrow-return-right" title="Restore this Post"></i></a>
                                                         &nbsp;<a href="manage-posts.php?pid=<?php echo htmlentities($row['pid']);?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
                                                     </tr>
                                                     <?php $cont++; } } else{
