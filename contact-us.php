@@ -31,12 +31,12 @@ include('includes/config.php');
 
 <?php 
 $pagetype='contactus';
-$query=mysqli_query($con,"select PageTitle,Description from tblpages where PageName='$pagetype'");
+$query=mysqli_query($con,"SELECT * FROM tbl_pages WHERE pagename='$pagetype'");
 while($row=mysqli_fetch_array($query))
 {
 
 ?>
-      <h1 class="mt-4 mb-3"><?php echo htmlentities($row['PageTitle'])?>
+      <h1 class="mt-4 mb-3"><?php echo htmlentities($row['pagetitle'])?>
   
       </h1>
 
@@ -52,7 +52,7 @@ while($row=mysqli_fetch_array($query))
 
         <div class="col-lg-12">
 
-          <p><?php echo $row['Description'];?></p>
+          <p><?php echo $row['pagedetails'];?></p>
         </div>
       </div>
       <!-- /.row -->
