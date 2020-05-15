@@ -62,7 +62,7 @@ include('includes/config.php');
     <center>
 
       <?php
-      $pr_query="SELECT * FROM tbl_post";
+      $pr_query="SELECT * FROM tbl_post WHERE active='1'";
       $pr_result=mysqli_query($con,$pr_query);
       $total_record=mysqli_num_rows($pr_result);
       $total_page=ceil($total_record/$num_per_page);
