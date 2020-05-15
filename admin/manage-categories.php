@@ -10,22 +10,34 @@ else{
     if($_GET['action']=='del' && $_GET['rid'])
     {
         $id=intval($_GET['rid']);
-        $query=mysqli_query($con,"update tblcategory set Is_Active='0' where id='$id'");
-        $msg="Category deleted ";
+        $sql="UPDATE tbl_catagory SET active='0' WHERE id='$id'";
+        $query=mysqli_query($con,$sql);
+        if ($query) {
+            $msg="Category Deleted!!";
+        }
+      
     }
 // Code for restore
     if($_GET['resid'])
     {
         $id=intval($_GET['resid']);
-        $query=mysqli_query($con,"update tblcategory set Is_Active='1' where id='$id'");
-        $msg="Category restored successfully";
+        $sql="UPDATE tbl_catagory SET active='1' WHERE id='$id'";
+        $query=mysqli_query($con,$sql);
+        if ($query) {
+           $msg="Category restored successfully";
+        }
+       
     }
 // Code for Forever deletionparmdel
     if($_GET['action']=='parmdel' && $_GET['rid'])
     {
         $id=intval($_GET['rid']);
-        $query=mysqli_query($con,"delete from  tblcategory  where id='$id'");
-        $delmsg="Category deleted forever";
+        $sql="DELETE FROM tbl_catagory WHERE id='$id'";
+        $query=mysqli_query($con,$sql);
+        if ($query) {
+             $delmsg="Category deleted forever";
+        }
+       
     }
     ?>
     <!DOCTYPE html>
@@ -166,17 +178,18 @@ else{
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query=mysqli_query($con,"Select id,CategoryName,Description,PostingDate,UpdationDate from  tblcategory where Is_Active=0");
+                                    $dsql="SELECT * FROM tbl_catagory WHERE active='0'";
+                                    $dquery=mysqli_query($con,$dsql);
                                     $cnt=1;
-                                    while($row=mysqli_fetch_array($query))
+                                    while($row=mysqli_fetch_array($dquery))
                                     {
                                         ?>
                                         <tr>
                                             <th scope="row"><?php echo htmlentities($cnt);?></th>
-                                            <td><?php echo htmlentities($row['CategoryName']);?></td>
-                                            <td><?php echo htmlentities($row['Description']);?></td>
-                                            <td><?php echo htmlentities($row['PostingDate']);?></td>
-                                            <td><?php echo htmlentities($row['UpdationDate']);?></td>
+                                            <td><?php echo htmlentities($row['catname']);?></td>
+                                            <td><?php echo htmlentities($row['catdescription']);?></td>
+                                            <td><?php echo htmlentities($row['createdate']);?></td>
+                                            <td><?php echo htmlentities($row['updatedate']);?></td>
                                             <td><a href="manage-categories.php?resid=<?php echo htmlentities($row['id']);?>"><i class="ion-arrow-return-right" title="Restore this category"></i></a>
                                                 &nbsp;<a href="manage-categories.php?rid=<?php echo htmlentities($row['id']);?>&&action=parmdel" title="Delete forever"> <i class="fa fa-trash-o" style="color: #f05050"></i> </td>
                                                 </tr>
