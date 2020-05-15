@@ -46,7 +46,7 @@ include('includes/config.php');
         $rowcount=mysqli_num_rows($query);
         if($rowcount==0)
         {
-          echo "No record found";
+          echo "Search Result Not found";
         }
         else {
           while ($row=mysqli_fetch_array($query)) {
